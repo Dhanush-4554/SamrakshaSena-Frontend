@@ -1,26 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Box } from '@chakra-ui/react';
+
+import { ChatState } from '../../context/ChatProvider';
+
+import SearchBar from './ChatsComponents/SearchBar';
+import ChatsConatiner from './ChatsComponents/ChatsConatiner';
+import ChatBox from './ChatsComponents/ChatBox';
+
+
 
 const ChatsPage = () => {
-    const [chats,setChats] = useState([]);
-
-    const getChats = async() =>{
-        const {data} = await axios.get('/api/agencyLocations');
-        console.log(data);
-        setChats(data.AllLocation);
-    }
-
-    useEffect(()=>{
-        getChats();
-    },[])
-
+  
+  const {CurrentUser} = ChatState();
+  
   return (
-    <div>
-      {
-        chats.map((chat)=>{
-            return (<h1>{chat.AgencyName}</h1>)
-        })
-      }
+    <div style={{width:'100%',backgroundColor:'white',minHeight:'100vh',}}>
+      {CurrentUser && <SearchBar/>}
+      <Box 
+        display='flex'
+        justifyContent='space-between'
+        w='100%'
+        h='90vh'
+      >
+        {CurrentUser && <ChatsConatiner/>}
+        {CurrentUser && <ChatBox/>}
+      </Box>
     </div>
   )
 }

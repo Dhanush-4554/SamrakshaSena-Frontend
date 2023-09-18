@@ -1,19 +1,22 @@
 import { Routes, Route } from "react-router-dom";
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react';
+import './App.css';
 
 
 
 import Home from "./pages/Home/Home";
 import ChatsPage from "./pages/ChatRoom/ChatsPage";
+import Login from "./pages/RegisterPages/TestLogin";
 
 
 function App() {
   return (
     <ChakraProvider>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path='/communication' element={<ChatsPage/>} />
-      </Routes>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/login" element={<Login />} /> {/*  Dont Use this it for Testing with backend Create New Page */}
+          <Route path='/communication' element={<ChatsPage/>} />
+        </Routes>
     </ChakraProvider>
   );
 }
