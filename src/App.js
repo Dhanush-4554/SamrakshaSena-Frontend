@@ -15,6 +15,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path='/communication' element={<ChatsPage/>} />
+        <Route exact path="/login" element={<Login />} /> {/*  Dont Use this it for Testing with backend Create New Page */}
         <Route path='/map' element={<Nearest/>} />
       </Routes>
     </ChakraProvider>
