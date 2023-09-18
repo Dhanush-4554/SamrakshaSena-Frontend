@@ -5,6 +5,8 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 import Home from "./pages/Home/Home";
 import ChatsPage from "./pages/ChatRoom/ChatsPage";
+import Nearest from "./pages/MapPage/NearestAgencyFinder";
+// import Map from "./pages/MapPage/Map";
 
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path='/communication' element={<ChatsPage/>} />
+        <Route path='/map' element={<Nearest/>} />
       </Routes>
     </ChakraProvider>
   );
