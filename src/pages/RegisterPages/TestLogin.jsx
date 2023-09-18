@@ -53,8 +53,8 @@ const Login = () => {
       });
 
       //console.log(data);
-      setCurrentUser(data);
-      localStorage.setItem("userInfo", JSON.stringify(data)); //created a localStorage for CurrentUser
+      setCurrentUser(data.Agency);
+      localStorage.setItem("userInfo", JSON.stringify(data.Agency)); //created a localStorage for CurrentUser
       setLoading(false);
       history("/communication");
 

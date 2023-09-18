@@ -1,4 +1,13 @@
-import { Box, Button, Input, Spinner, Text, Tooltip, useToast } from '@chakra-ui/react';
+import { 
+    Box,
+    Button,
+    Input,
+    Spinner, 
+    Text, 
+    Tooltip, 
+    useToast 
+} from '@chakra-ui/react';
+
 import {
   Drawer,
   DrawerBody,
@@ -9,7 +18,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Avatar } from "@chakra-ui/avatar";
+
 import axios from 'axios';
 import React, { useState } from 'react'
 
@@ -18,59 +27,78 @@ import { ChatState } from '../../../context/ChatProvider';
 import ChatLoading from './ChatLoading';
 import UserList from './UserList';
 
+
 const SearchBar = () => {
   const [search, setSearch] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadingChat, setLoadingChat] = useState();
+  const [loadingChat, setLoadingChat] = useState(false);
   const btnRef = React.useRef();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
-  const { CurrentUser, setSelectedChat , chats ,setChats } = ChatState();
-  const Name = CurrentUser.Agency.AgencyName;
+  const { CurrentUser, 
+          setSelectedChat, 
+          chats, 
+          setChats 
+  } = ChatState();
 
-
-  const handleSearch = async () => {
-    if (!search) {
+  
+  const handleSearch = async (query) => {
+    if (!query) {
       toast({
         title: "Please Enter something in search",
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "top-left",
+        position: "top",
       });
       return;
     }
 
 
     try {
+
       setLoading(true);
-
-      const { data } = await axios.get('/api/getAllagencies');
-
+      const { data } = await axios.get(`/api/getAllagencies?search=${query}`);
+      //console.log(data.agencies);
       setLoading(false);
       setSearchResult(data.agencies);
-      //console.log(searchResult);
 
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Search Results",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
     }
   };
 
   const accessChat = async (userID) => {
+
+    //console.log(userID);
+
     try {
+      
       setLoadingChat(true);
 
       const { data } = await axios.post('/chatroom/getChat', { chatUser: userID });
       //console.log(data);
+      
 
-      if (!chats.result.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setChats({data, ...chats});
 
+      //console.log(chats);
+      
       setLoadingChat(false);
       setSelectedChat(data);
       onClose(onClose);
+      window.location.reload();
+      
     } catch (error) {
       toast({
         title: "Error fetching the chat",
@@ -109,9 +137,9 @@ const SearchBar = () => {
         </Text>
         <Box>
           <Box>
-            <Text>{Name}</Text>
+            <Text>{CurrentUser.AgencyName}</Text>
             <Text fontSize="xs">
-              {CurrentUser.Agency.AgencyEmail}
+              {CurrentUser.AgencyEmail}
             </Text>
           </Box>
         </Box>
@@ -134,8 +162,7 @@ const SearchBar = () => {
               <Input
                 placeholder='Search Name'
                 mr={2}
-                value={search}
-                onChange={(e) => { setSearch(e.target.value) }}
+                onChange={(e) => { handleSearch(e.target.value) }}
               />
               <Button onClick={handleSearch}>
                 Go
