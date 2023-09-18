@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Login = () => {
+const ChatBox = () => {
   return (
     <div>
-      
+      Box
     </div>
   )
 }
 
-export default Login
+export default ChatBox
