@@ -20,12 +20,13 @@ const ChatsPage = () => {
       <Box 
         display='flex'
         justifyContent='space-between'
+        pt={5}
         w='100%'
         h='90vh'
       >
         {CurrentUser && <ChatsConatiner fetchAgain={fetchAgain}/>}
-        {/* {CurrentUser && 
-        <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />} */}
+        {CurrentUser && 
+        <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />}
       </Box>
     </div>
   )

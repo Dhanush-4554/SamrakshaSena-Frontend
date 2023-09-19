@@ -82,7 +82,7 @@ const ChatsConatiner = ({ fetchAgain }) => {
         p={3}
         bg="#F8F8F8"
         w="100%"
-        h="100%"
+        h='90%'
         borderRadius="lg"
         overflowY="hidden"
       >
@@ -91,7 +91,9 @@ const ChatsConatiner = ({ fetchAgain }) => {
           <Stack overflowY="scroll">
             {chats.result.map((chat) => (
               <Box
-                onClick={() => setSelectedChat(chat)}
+                onClick={() => {setSelectedChat(chat)
+                  //console.log(selectedChat);
+                }}
                 cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
