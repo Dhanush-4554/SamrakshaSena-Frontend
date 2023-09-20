@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ChatState } from '../../../context/ChatProvider';
-import { Box, Button, Text } from '@chakra-ui/react';
+import { Box, Button, FormControl, Input, Spinner, Text, useToast } from '@chakra-ui/react';
 import getSender from '../../../config/ChatLogic';
 import axios from 'axios';
+import { useState } from 'react';
+import './Styles.css'
+import ScrollChat from './ScrollChat';
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component should not be async mfuck
 
     const { CurrentUser, selectedChat , setSelectedChat } = ChatState();
+
+    const [messages, setMessages] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [newMessage, setNewMessage] = useState("");
+    const toast = useToast();
 
     const LeaveGroup = async() =>{
 
@@ -22,6 +30,75 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
           setFetchAgain(!fetchAgain);
           window.location.reload();
     }
+    
+
+    const fetchMessages = async()=>{
+
+        if(!selectedChat) return;
+        console.log(selectedChat._id);
+
+        try {
+            
+            const {data} = await axios.get(`/chatroom/getMsg/${selectedChat._id}`);
+
+            console.log(selectedChat);
+            setMessages(data);
+            setLoading(false);
+
+        } catch (error) {
+            toast({
+                title: "Error Occured!",
+                description: "Failed to Load the Messages",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+              });
+        }
+
+    }
+
+    useEffect(()=>{
+        fetchMessages();
+    },[selectedChat]);
+
+
+    const sendMessage = async(event) =>{
+
+        if (event.key === "Enter" && newMessage) {
+
+         
+        try {
+
+            const {data} = await axios.post('/chatroom/sendMsg',{
+                content:newMessage,
+                chatID:selectedChat._id
+            });
+            
+            
+            setNewMessage('');
+            setMessages([...messages,data]);
+            //console.log(messages);
+
+        } catch (error) {
+            toast({
+                title: "Error Occured!",
+                description: "Failed to send the Message",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+              });
+        }
+        
+       } 
+    }
+
+    const typingHandler = async(e) =>{
+        setNewMessage(e.target.value);
+    }
+
+    
 
     return (
         <>
@@ -58,6 +135,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
 
                             }
                         </Text>
+
                         <Box
                             display="flex"
                             flexDir="column"
@@ -69,6 +147,36 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
                             borderRadius="lg"
                             overflowY="hidden"
                         >
+
+                         {
+                            loading ? 
+                            <Spinner
+                                size="xl"
+                                w={20}
+                                h={20}
+                                alignSelf="center"
+                                margin="auto"
+                            /> : (
+                                <div className='messages'>
+                                    <ScrollChat messages={messages} />
+                                </div>
+                            )
+                         }
+
+                         <FormControl 
+                            onKeyDown={sendMessage}
+                            isRequired
+                            mt={3}
+                         >
+                            <Input
+                                variant="filled"
+                                bg="#E0E0E0"
+                                placeholder="Enter a message.."
+                                value={newMessage}
+                                onChange={typingHandler}
+                            />
+
+                         </FormControl>   
 
                         </Box>
                     </>
