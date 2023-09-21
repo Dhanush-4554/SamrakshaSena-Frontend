@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from 'react-router-dom'
+import { React, useState, useEffect, useRef } from "react";
 import customMarkerIconUrl from "./path-to-your-marker-icon.png";
 import L from "leaflet";
+import "leaflet-routing-machine";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet/dist/leaflet.css";
 import './map.css'
 
@@ -10,10 +11,10 @@ function Nearest() {
   const [userLocation, setUserLocation] = useState(null);
   const [markedLocations, setMarkedLocations] = useState([]);
   const [nearestLocation, setNearestLocation] = useState(null);
+  const [selectedAgency, setSelectedAgency] = useState(null);
   const [error, setError] = useState(null);
-  const mapRef = useRef(null); // Ref for the map container
-  const mapInstanceRef = useRef(null); // Ref for the Leaflet map instance
-
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
 
   const customMarkerIcon = L.icon({
     iconUrl: customMarkerIconUrl,
@@ -109,25 +110,32 @@ function Nearest() {
 
         // Adding markers for marked locations of the selected category
         filteredLocations.forEach((location) => {
-          L.marker([location.Latitude, location.Longitude], {
+          const marker = L.marker([location.Latitude, location.Longitude], {
             icon: customMarkerIcon,
           })
             .bindPopup(location.AgencyName)
             .addTo(mapInstanceRef.current);
+
+          // Attach a custom popup content with the button
+          marker.on("click", () => {
+            setSelectedAgency(location);
+          });
         });
 
         // Adding a marker for the nearest location
         if (nearest) {
-          L.marker([nearest.Latitude, nearest.Longitude], {
+          const nearestAgency = L.marker([nearest.Latitude, nearest.Longitude], {
             icon: customMarkerIcon,
           })
             .bindPopup(`Nearest: ${nearest.AgencyName}`)
             .addTo(mapInstanceRef.current);
+          nearestAgency.on("click", () => {
+            setSelectedAgency(nearest);
+          });
         }
       }
     }
   }, [userLocation, markedLocations, category]);
-
 
   function findNearestLocation(userLat, userLon, locations) {
     let nearestLocation = null;
@@ -171,53 +179,38 @@ function Nearest() {
 
 
 
+  const showShortestRoute = () => {
+    if (userLocation && selectedAgency) {
+
+      // Creating a routing control and add it to the map
+      L.Routing.control({
+        waypoints: [
+          L.latLng(userLocation.latitude, userLocation.longitude),
+          L.latLng(selectedAgency.Latitude, selectedAgency.Longitude),
+        ],
+      }).addTo(mapInstanceRef.current);
+
+    }
+  };
 
   return (
     <div className="map-container">
-      {/* <h1>Nearest Locations</h1>
-      {userLocation && nearestLocation ? (
-        <div>
-          <h3>Your current location is:</h3>
-          <ul>
-            <li>Latitude: {userLocation.latitude}</li>
-            <li>Longitude: {userLocation.longitude}</li>
-          </ul>
-
-          <h3>Nearest Marked Location:</h3>
-          <ul>
-            <li>Name: {nearestLocation.AgencyName}</li>
-            <li>Latitude: {nearestLocation.Latitude}</li>
-            <li>Longitude: {nearestLocation.Longitude}</li>
-            <li>
-              Distance:{" "}
-              {calculateDistance(
-                userLocation.latitude,
-                userLocation.longitude,
-                nearestLocation.Latitude,
-                nearestLocation.Longitude
-              ).toFixed(2)}{" "}
-              km
-            </li>
-          </ul>
-        </div>
-      ) : (
-        <h1>{error || "Fetching location..."}</h1>
-      )} */}
       <div className="categories">
         <button className='link' onClick={() => setCategory("fire")}><p>Fire Agencies</p></button>
         <button className='link' onClick={() => setCategory("flood")}><p>Flood Agencies</p></button>
         <button className='link' onClick={() => setCategory("animalRescue")}><p>Animal Rescue</p></button>
-        <button className='link' onClick={() => setCategory("escavation")}><p>Escavation Agencies</p></button>
+        <button className='link' onClick={() => setCategory("excavation")}><p>Excavation Agencies</p></button>
       </div>
       <div className="map-holder">
         <div id="map" className="map" ref={mapRef}></div>
       </div>
-      
+      {selectedAgency && (
+        <div className="route-button">
+          <button onClick={showShortestRoute}>Show Shortest Route</button>
+        </div>
+      )}
     </div>
   );
 }
 
 export default Nearest;
-
-
-

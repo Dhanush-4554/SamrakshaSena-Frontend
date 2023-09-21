@@ -42,3 +42,13 @@
     background-color: #7ED957;
     color: black;
 }
+
+.route-button{
+    background-color: black;
+    height: 30px;
+    width: 100px;
+}
+
+.leaflet-routing-alt{
+    max-height: 160px;
+}
