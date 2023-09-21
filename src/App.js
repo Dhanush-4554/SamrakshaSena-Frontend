@@ -7,7 +7,7 @@ import './App.css';
 import Home from "./pages/Home/Home";
 import ChatsPage from "./pages/ChatRoom/ChatsPage";
 import Nearest from "./pages/MapPage/NearestAgencyFinder";
-import Login from "./pages/RegisterPages/TestLogin";
+import Login from "./pages/RegisterPages/Login";
 
 
 function App() {

@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Gloock&family=League+Spartan:wght@900&family=Open+Sans:wght@600&family=Poppins:wght@600;700&family=Roboto:wght@300&display=swap");
+.login {
+  width: 580px;
+  height: 400px;
+  border: 1px solid #69a85a;
+  display: flex;
+  padding: 10px;
+  margin: auto;
+  margin-top: 100px;
+}
+
+.register {
+  width: 55%;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-image: url(backgroundImage.jpg);
+  color: white;
+  align-items: center;
+}
+
+.register h1 {
+  font-size: 35px;
+  font-family: "League Spartan", sans-serif;
+}
+
+.register h3 {
+  font-size: 19px;
+  font-family: "Poppins", sans-serif;
+}
+
+.register input {
+  border: 2px solid white;
+  width: 170px;
+  height: 48px;
+  color: white;
+  background-color: #69a85a;
+  font-size: 25px;
+  font-family: "Open Sans", sans-serif;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: ease-in-out 0.2s;
+}
+
+.register input:hover {
+  transform: scale(1.04);
+}
+
+.signIn {
+  width: 60%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.signIn h1 {
+  font-size: 40px;
+  color: #69a85a;
+  font-family: "Gloock", serif;
+}
+
+.signIn img {
+  height: 21px;
+}
+
+.signIn input {
+  border: 1px solid gray;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 11px;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  padding-left: 5px;
+}
+
+.signIn input:focus {
+  border-color: #69a85a;
+}
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.submit {
+  background-color: #69a85a;
+  color: white;
+  font-size: 20px;
+  font-family: "Open Sans", sans-serif;
+  height: 60px;
+  width: 100px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: ease-in-out 0.2s;
+}
+
+.submit:hover {
+  transform: scale(1.04);
+}
