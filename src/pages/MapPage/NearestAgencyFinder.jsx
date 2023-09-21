@@ -64,7 +64,7 @@ function Nearest() {
     if (userLocation && !mapInstanceRef.current) {
       mapInstanceRef.current = L.map(mapRef.current).setView(
         [userLocation.latitude, userLocation.longitude],
-        12
+        7.5
       );
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -73,7 +73,6 @@ function Nearest() {
       }).addTo(mapInstanceRef.current);
     }
   }, [userLocation]);
-
 
   useEffect(() => {
     // Adding markers for user location, marked locations, and nearest location
