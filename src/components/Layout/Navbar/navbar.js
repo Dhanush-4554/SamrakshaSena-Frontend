@@ -24,7 +24,7 @@ const navbar = ({CurrentUser}) => {
           <li> <Link to="/"> Home </Link> </li>
           <li> <Link to="/map">  Agencies Location </Link> </li>
           <li> <Link to="#"> Contact </Link> </li>
-          <li> <Link to="/communication">  Chat Room </Link> </li>
+          <li> <Link to={link}>  Chat Room </Link> </li>
         </ul>
       </nav>
       <ul className="nav_login">
