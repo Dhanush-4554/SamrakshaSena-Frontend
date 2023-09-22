@@ -1,0 +1,46 @@
+div{
+    padding: 0;
+}
+*{
+    padding: 0;
+}
+
+.nav_bar{
+    position: absolute;
+    top: 0;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, .85) ;
+    color: aliceblue;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 35px 2%;
+    width: 100%;
+}
+
+.logo{
+    cursor: pointer;
+}
+
+.nav_login li {
+    list-style: none;
+    display: inline;
+}
+
+.nav_link li {
+    list-style: none;
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+a{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.nav_link li a:hover {
+    color: green;
+    text-decoration: underline;
+    transition: 0.5s;
+}
