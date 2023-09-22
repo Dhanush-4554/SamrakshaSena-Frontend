@@ -14,7 +14,7 @@ function Card() {
                         <img className="arrow" src={arrow} />
                     </div>
                     <div className="btn">
-                        <button>
+                        <button className="button1">
                             <div className="btnCon">
                                 <img className="eme" src={emergencySymbol} />
                                 <p className="emergency-txt">EMEREGENCY</p>
