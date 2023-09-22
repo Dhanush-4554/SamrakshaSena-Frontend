@@ -6,22 +6,24 @@ import axios from 'axios';
 import { useState } from 'react';
 import './Styles.css'
 import ScrollChat from './ScrollChat';
+import AssistCall from './AssistCall';
 
 import io from "socket.io-client";
-const ENDPOINT = "http://localhost:5000"; 
+import GroupChatModel from './GroupChatModel';
+const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component should not be async mfuck
 
-    const { CurrentUser, selectedChat , setSelectedChat } = ChatState();
-    const [SocketConnected , setSocketConnected] = useState(false);
+    const { CurrentUser, selectedChat, setSelectedChat } = ChatState();
+    const [SocketConnected, setSocketConnected] = useState(false);
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [newMessage, setNewMessage] = useState("");
-    
+
     const toast = useToast();
 
-    const LeaveGroup = async() =>{
+    const LeaveGroup = async () => {
 
         const { data } = await axios.put(
             `/chatroom/removeFromGroup`,
@@ -29,29 +31,29 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
                 groupID: selectedChat._id,
                 userID: CurrentUser._id,
             },
-          );
-          console.log(data);
-          setSelectedChat(data);
-          setFetchAgain(!fetchAgain);
-          window.location.reload();
+        );
+        console.log(data);
+        setSelectedChat(data);
+        setFetchAgain(!fetchAgain);
+        window.location.reload();
     }
-    
 
-    const fetchMessages = async()=>{
 
-        if(!selectedChat) return;
+    const fetchMessages = async () => {
+
+        if (!selectedChat) return;
         console.log(selectedChat._id);
 
         try {
             setLoading(true);
 
-            const {data} = await axios.get(`/chatroom/getMsg/${selectedChat._id}`);
+            const { data } = await axios.get(`/chatroom/getMsg/${selectedChat._id}`);
 
             console.log(selectedChat);
             setMessages(data);
             setLoading(false);
 
-            socket.emit('join chat' , selectedChat._id)
+            socket.emit('join chat', selectedChat._id)
 
         } catch (error) {
             toast({
@@ -61,84 +63,83 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
                 duration: 5000,
                 isClosable: true,
                 position: "bottom",
-              });
+            });
         }
 
     }
 
     useEffect(() => {
         socket = io(ENDPOINT);
-        socket.emit("setup",CurrentUser);
+        socket.emit("setup", CurrentUser);
         socket.on("connected", () => setSocketConnected(true));
         // socket.on("typing", () => setIsTyping(true));
         // socket.on("stop typing", () => setIsTyping(false));
-    
-        // eslint-disable-next-line
-      }, []);
 
-    useEffect(()=>{
+        // eslint-disable-next-line
+    }, []);
+
+    useEffect(() => {
         fetchMessages();
 
         selectedChatCompare = selectedChat;
-    },[selectedChat]);
+    }, [selectedChat]);
 
 
-    useEffect(()=>{
-        socket.on('Msg recieved',(newMessageRecieved)=>{
-            if(!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id){
+    useEffect(() => {
+        socket.on('Msg recieved', (newMessageRecieved) => {
+            if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
                 console.log('Notify');
-            } else{
-                setMessages([...messages,newMessageRecieved]);
+            } else {
+                setMessages([...messages, newMessageRecieved]);
             }
 
         })
-    })  
+    })
 
 
 
 
-    const sendMessage = async(event) =>{
+    const sendMessage = async (event) => {
 
         if (event.key === "Enter" && newMessage) {
 
-         
-        try {
 
-            const {data} = await axios.post('/chatroom/sendMsg',{
-                content:newMessage,
-                chatID:selectedChat._id
-            });
-            
-            
-            setNewMessage('');
+            try {
 
-            socket.emit('new message',data);
-            setMessages([...messages,data]);
-            //console.log(messages);
+                const { data } = await axios.post('/chatroom/sendMsg', {
+                    content: newMessage,
+                    chatID: selectedChat._id
+                });
 
-            
 
-        } catch (error) {
-            toast({
-                title: "Error Occured!",
-                description: "Failed to send the Message",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom",
-              });
+                setNewMessage('');
+
+                socket.emit('new message', data);
+                setMessages([...messages, data]);
+                //console.log(messages);
+
+
+
+            } catch (error) {
+                toast({
+                    title: "Error Occured!",
+                    description: "Failed to send the Message",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom",
+                });
+            }
+
         }
-        
-       } 
     }
 
-    
 
-    const typingHandler = async(e) =>{
+
+    const typingHandler = async (e) => {
         setNewMessage(e.target.value);
     }
 
-    
 
     return (
         <>
@@ -158,24 +159,31 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
                             {
                                 !selectedChat.GroupChat ? (
                                     <>
-                                        
+
                                         <Box
-                                        display='flex'
-                                        justifyContent='space-between'
-                                    >
-                                       {getSender(CurrentUser, selectedChat.users)}
-                                        <Button
-                                            colorScheme='whatsapp'
-                                            onClick={LeaveGroup}
-                                        >Need Asist</Button>
-                                    </Box>
+                                            display='flex'
+                                            justifyContent='space-between'
+                                        >
+                                            {getSender(CurrentUser, selectedChat.users)}
+
+                                            <AssistCall>
+                                                <Button
+                                                    d="flex"
+                                                    fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+                                                    colorScheme='whatsapp'
+                                                >
+                                                    Need Assist
+                                                </Button>
+                                            </AssistCall>
+
+                                        </Box>
                                     </>
                                 ) : (
                                     <Box
                                         display='flex'
                                         justifyContent='space-between'
                                     >
-                                       { selectedChat.chatName.toUpperCase()}
+                                        {selectedChat.chatName.toUpperCase()}
                                         <Button
                                             colorScheme='red'
                                             onClick={LeaveGroup}
@@ -198,35 +206,35 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
                             overflowY="hidden"
                         >
 
-                         {
-                            loading ? 
-                            <Spinner
-                                size="xl"
-                                w={20}
-                                h={20}
-                                alignSelf="center"
-                                margin="auto"
-                            /> : (
-                                <div className='messages'>
-                                    <ScrollChat messages={messages} />
-                                </div>
-                            )
-                         }
+                            {
+                                loading ?
+                                    <Spinner
+                                        size="xl"
+                                        w={20}
+                                        h={20}
+                                        alignSelf="center"
+                                        margin="auto"
+                                    /> : (
+                                        <div className='messages'>
+                                            <ScrollChat messages={messages} />
+                                        </div>
+                                    )
+                            }
 
-                         <FormControl 
-                            onKeyDown={sendMessage}
-                            isRequired
-                            mt={3}
-                         >
-                            <Input
-                                variant="filled"
-                                bg="#E0E0E0"
-                                placeholder="Enter a message.."
-                                value={newMessage}
-                                onChange={typingHandler}
-                            />
+                            <FormControl
+                                onKeyDown={sendMessage}
+                                isRequired
+                                mt={3}
+                            >
+                                <Input
+                                    variant="filled"
+                                    bg="#E0E0E0"
+                                    placeholder="Enter a message.."
+                                    value={newMessage}
+                                    onChange={typingHandler}
+                                />
 
-                         </FormControl>   
+                            </FormControl>
 
                         </Box>
                     </>
