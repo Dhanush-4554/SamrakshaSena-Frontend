@@ -1,6 +1,7 @@
 import React from 'react'
 import "./navstyle.css"
 import { ChatState } from '../../../context/ChatProvider'
+import { Link } from 'react-router-dom';
 
 
 const navbar = ({CurrentUser}) => {
@@ -17,18 +18,18 @@ const navbar = ({CurrentUser}) => {
 
   return (
     <header className="nav_bar">
-      <h1 className="logo"> <a href='/'>  Samraksha sena </a>  </h1>
+      <h1 className="logo">  <Link to="/">  Samraksha sena </Link>  </h1>
       <nav>
         <ul class="nav_link">
-          <li> <a href="/"> Home </a></li>
-          <li> <a href="/map"> Agencies Location </a> </li>
-          <li> <a href=""> Contact</a></li>
-          <li> <a href={link}> Chat Room</a></li>
+          <li> <Link to="/"> Home </Link> </li>
+          <li> <Link to="/map">  Agencies Location </Link> </li>
+          <li> <Link to="#"> Contact </Link> </li>
+          <li> <Link to="/communication">  Chat Room </Link> </li>
         </ul>
       </nav>
       <ul className="nav_login">
-        <li> <a href="/login"> Login <b>|</b> </a> </li>
-        <li> <a href=""> English </a> </li>
+        <li> <Link to="/login">  Login <b>|</b> </Link> </li>
+        <li>  English  </li>
       </ul>
     </header>
   )
