@@ -1,5 +1,7 @@
 import { React, useState, useEffect, useRef } from "react";
 import customMarkerIconUrl from "./path-to-your-marker-icon.png";
+import { useLocation } from "react-router-dom";
+
 import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
@@ -7,6 +9,11 @@ import "leaflet/dist/leaflet.css";
 import './map.css'
 
 function Nearest() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const categoryParam = queryParams.get("category");
+
+
   const [category, setCategory] = useState();
   const [userLocation, setUserLocation] = useState(null);
   const [markedLocations, setMarkedLocations] = useState([]);
@@ -195,6 +202,45 @@ function Nearest() {
       lineStroke.stroke='blue';
     }
   };
+
+  // const showShortestRoute = async () => {
+  //   if (userLocation && selectedAgency && categoryParam) {
+  //     try {
+  //       // Create a request object with the necessary data, including the selected category
+  //       const requestData = {
+  //         userLocation: {
+  //           latitude: userLocation.latitude,
+  //           longitude: userLocation.longitude,
+  //         },
+  //         nearestAgency: {
+  //           name: selectedAgency.AgencyName,
+  //           phoneNumber: selectedAgency.AgencyNumber,
+  //         },
+  //         category: categoryParam, // Use the categoryParam from the URL
+  //       };
+
+  //       // Send the request to the backend
+  //       const response = await fetch('/api/getEverything', {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(requestData),
+  //       });
+
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         // Handle the response from the backend here
+  //         console.log('Response from Backend:', data);
+  //       } else {
+  //         // Handle error responses from the backend
+  //         console.error('Error sending data to the backend');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error sending data to the backend:', error);
+  //     }
+  //   }
+  // }
 
 
   return (
