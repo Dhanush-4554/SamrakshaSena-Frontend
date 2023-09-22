@@ -23,12 +23,12 @@ function Card() {
                     </div>
                 </div>
                 <div className="bbox">
-                    <div className="bboxCon">
-                        <h2>WHAT HAPPENS WHEN YOU CLICK THE EMERGENCY BUTTON</h2>
+                <h2 className="h2Line">WHAT HAPPENS WHEN YOU CLICK THE EMERGENCY BUTTON</h2>
+                    <div className="bboxCon">     
                         <ul>
-                            <li>Your <b>LOCATION</b>  permission and <b>PHONE NUMBER</b> will be asked</li>
+                            <li>Your <span className="weit">LOCATION</span>  permission and <span className="weit">PHONE NUMBER</span> will be asked</li>
                             <li>Nearest available authority will get alerted</li>
-                            <li><b>*T&C:</b> Misusage of this button will face serious consequences</li>
+                            <li><span className="weit">*T&C:</span> Misusage of this button will face serious consequences</li>
                         </ul>
                     </div>
                 </div>

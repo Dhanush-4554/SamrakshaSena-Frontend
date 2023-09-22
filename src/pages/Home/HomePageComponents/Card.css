@@ -1,3 +1,7 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Ubuntu&display=swap');
+
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -38,7 +42,7 @@
 .eme {
   padding-top: 6.5px;
   padding-right: 2px;
-  height: 35px;
+  height: 39px;
   margin-bottom: 10px;
 }
 
@@ -72,6 +76,18 @@
   color: white;
   width: 1000px;
   align-content: center;
+  font-size: x-large;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.h2Line{
+  padding-left: 95px;
+  padding-bottom: 15px;
+  /* font-style: italic; */
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 30px;
+  font-weight: 550;
 }
 
 .bboxCon {
@@ -79,5 +95,14 @@
 }
 
 .emergency-txt {
-  font-size: large;
+  font-size: 22px;
+
+}
+
+.bboxCon li {
+  padding-bottom: 5px;
+}
+
+.weit{
+  font-weight: 600;
 }
