@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import ChatsPage from "./pages/ChatRoom/ChatsPage";
 import Nearest from "./pages/MapPage/NearestAgencyFinder";
 import Login from "./pages/RegisterPages/Login";
+import NearestWithCategory from "./pages/EmergencyForm/EmergencyForm";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path='/communication' element={<ChatsPage/>} />
         <Route exact path="/login" element={<Login />} /> {/*  Dont Use this it for Testing with backend Create New Page */}
         <Route path='/map' element={<Nearest/>} />
+        <Route path="/form"  element={<NearestWithCategory/>}/>
       </Routes>
     </ChakraProvider>
   );
