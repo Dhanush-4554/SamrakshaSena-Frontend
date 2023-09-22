@@ -5,17 +5,18 @@ import './registerpage.css';
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import { ChatState } from "../../context/ChatProvider";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { ChatState } from '../../context/ChatProvider';
 
 const Login = () => {
 
   const toast = useToast();
+  
 
   const [AgencyName, setAgencyName] = useState();
   const [AgencyPassword, setAgencyPassword] = useState();
   //const [loading, setLoading] = useState(false);
-  const history = useNavigate();
+  const navigate = useNavigate();
 
 
   const { setCurrentUser } = ChatState();
@@ -35,7 +36,6 @@ const Login = () => {
 
 
     try {
-
       const { data } = await axios.post(
         "/api/login",
         { AgencyName, AgencyPassword }
@@ -43,7 +43,7 @@ const Login = () => {
       toast({
         title: "Login Successful",
         status: "success",
-        duration: 5000,
+        duration: 500,
         isClosable: true,
         position: "top",
       });
@@ -51,7 +51,10 @@ const Login = () => {
       //console.log(data);
       setCurrentUser(data.Agency);
       localStorage.setItem("userInfo", JSON.stringify(data.Agency)); //created a localStorage for CurrentUser
-      history("/communication");
+
+      setTimeout(() => {
+        navigate("/");
+      }, 500);
 
     } catch (error) {
       toast({

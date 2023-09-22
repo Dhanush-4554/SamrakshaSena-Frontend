@@ -158,7 +158,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
                             {
                                 !selectedChat.GroupChat ? (
                                     <>
-                                        {getSender(CurrentUser, selectedChat.users)}
+                                        
+                                        <Box
+                                        display='flex'
+                                        justifyContent='space-between'
+                                    >
+                                       {getSender(CurrentUser, selectedChat.users)}
+                                        <Button
+                                            colorScheme=''
+                                            onClick={LeaveGroup}
+                                        >Leave Group</Button>
+                                    </Box>
                                     </>
                                 ) : (
                                     <Box

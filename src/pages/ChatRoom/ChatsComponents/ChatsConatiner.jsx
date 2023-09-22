@@ -26,7 +26,7 @@ const ChatsConatiner = ({ fetchAgain }) => {
 
     } catch (error) {
       toast({
-        title: "Error Occured!",
+        title: "Login to get Chats",
         description: "Failed to Load the chats",
         status: "error",
         duration: 5000,

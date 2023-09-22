@@ -1,17 +1,29 @@
 import React from 'react'
 import "./navstyle.css"
+import { ChatState } from '../../../context/ChatProvider'
 
-const navbar = () => {
+
+const navbar = ({CurrentUser}) => {
+
+  //console.log(CurrentUser);
+
+  var link;
+
+  if(CurrentUser){
+    link = '/communication';
+  } else{
+    link = '/login';
+  }
+
   return (
     <header className="nav_bar">
       <h1 className="logo"> <a href='/'>  Samraksha sena </a>  </h1>
       <nav>
         <ul class="nav_link">
           <li> <a href="/"> Home </a></li>
-          <li> <a href="/map"> Map </a> </li>
-          <li> <a href=""> Agencies</a></li>
+          <li> <a href="/map"> Agencies Location </a> </li>
           <li> <a href=""> Contact</a></li>
-          <li> <a href="/communication"> Chat Room</a></li>
+          <li> <a href={link}> Chat Room</a></li>
         </ul>
       </nav>
       <ul className="nav_login">
