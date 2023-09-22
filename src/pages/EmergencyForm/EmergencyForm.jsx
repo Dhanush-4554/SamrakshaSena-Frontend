@@ -37,10 +37,9 @@ function NearestWithCategory() {
 
                   
                     sendToBackend({
-                      latitude,
-                      longitude,
-                      agencyName: nearestAgency.AgencyName,
-                      phoneNumber: nearestAgency.AgencyNumber,
+                      UserLatitude:latitude,
+                      UserLongitude:longitude,
+                      AgencyNumber:nearestAgency.AgencyNumber,
                     });
                   }
                 } else {
@@ -110,9 +109,9 @@ function NearestWithCategory() {
   
   function sendToBackend(data) {
    
-    const backendEndpoint = `http://localhost:5000/api/sendDataToBackend`;
+    const backendEndpoint = `http://localhost:5000/api/alertAgency`;
   
-    console.log('Sending data to backend:', data);
+    console.log('Sending data to backend:',data);
   
     fetch(backendEndpoint, {
       method: "POST",

@@ -165,9 +165,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {  //functional component 
                                     >
                                        {getSender(CurrentUser, selectedChat.users)}
                                         <Button
-                                            colorScheme=''
+                                            colorScheme='whatsapp'
                                             onClick={LeaveGroup}
-                                        >Leave Group</Button>
+                                        >Need Asist</Button>
                                     </Box>
                                     </>
                                 ) : (
