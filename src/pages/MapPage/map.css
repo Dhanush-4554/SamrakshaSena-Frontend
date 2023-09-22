@@ -43,12 +43,27 @@
     color: black;
 }
 
-.route-button{
-    background-color: black;
-    height: 30px;
-    width: 100px;
-}
 
 .leaflet-routing-alt{
     max-height: 160px;
+}
+
+[src="marker-icon-2x.png"]{
+    display: none;
+    height: 0px;
+    width: 0px;
+}
+.shortestRoute{
+    height: 70px;
+    width: 130px;
+    background-color: black;
+    border-radius: 15px;
+    color: white;
+    margin: 3px;
+}
+.leaflet-interactive{
+    stroke: rgb(0, 119, 255);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
 }

@@ -188,10 +188,14 @@ function Nearest() {
           L.latLng(userLocation.latitude, userLocation.longitude),
           L.latLng(selectedAgency.Latitude, selectedAgency.Longitude),
         ],
+          
+        
       }).addTo(mapInstanceRef.current);
-
+      const lineStroke = document.getElementsByClassName('leaflet-interactive');
+      lineStroke.stroke='blue';
     }
   };
+
 
   return (
     <div className="map-container">
@@ -206,7 +210,7 @@ function Nearest() {
       </div>
       {selectedAgency && (
         <div className="route-button">
-          <button onClick={showShortestRoute}>Show Shortest Route</button>
+          <button onClick={showShortestRoute} className="shortestRoute">Show Shortest Route</button>
         </div>
       )}
     </div>
