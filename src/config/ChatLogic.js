@@ -7,6 +7,13 @@ const getSender = (loggedUser, users) => {
 export default getSender;
 
 
+export const getAssitNumber = (loggedUser, users) => {
+    
+
+  return users[0]._id === loggedUser._id ? users[1].AgencyNumber : users[0].AgencyNumber;
+};
+
+ 
 
 export const isSameSender = (messages, msg , i, userId) => {
     return (

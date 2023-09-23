@@ -23,6 +23,7 @@ import axios from "axios";
 import { useState } from "react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { ChatState } from "../../../context/ChatProvider";
+import { getAssitNumber } from "../../../config/ChatLogic";
 
 const AssistCall = ({ children }) => {
 
@@ -32,7 +33,7 @@ const AssistCall = ({ children }) => {
     const [Latitude, setLatituse] = useState();
     const [Longitude, setLongitude] = useState();
 
-    const {selectedChat} = ChatState();
+    const {selectedChat,CurrentUser} = ChatState();
 
     //console.log(selectedChat.users[0].AgencyName);
 
@@ -51,25 +52,33 @@ const AssistCall = ({ children }) => {
             return;
         }
 
+        console.log();
+
         try {
+
             const { data } = await axios.post('/api/assistNeeded', {
                 UserLongitude:Longitude,
                 UserLatitude:Latitude,
                 AssitType:selectedAssit,
                 Message:Msg,
-                AgencyNumberToCall:selectedChat.users[1].AgencyNumber,
-                AgencyNumberNeedAssit:selectedChat.users[0].AgencyName
+                AgencyNumberToCall:getAssitNumber(CurrentUser,selectedChat.users),
+                AgencyNumberNeedAssit:CurrentUser.AgencyName
             })
-    
+
+            console.log(data);
+
             onClose();
-            toast({
+
+            return toast({
                 title: "Assist Sucessfully Called",
                 status: "success",
                 duration: 6000,
                 isClosable: true,
                 position: "top",
             });
-
+    
+            
+            
         } catch (error) {
             toast({
                 title: "Failed to Create Assist , Try Agian....!",
