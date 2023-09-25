@@ -4,6 +4,7 @@ import Layout from '../../components/Layout/Layout'
 import Navbar from '../../components/Layout/Navbar/navbar'
 import Card from './HomePageComponents/EmergencyCard';
 import { ChatState } from '../../context/ChatProvider';
+import WePage from './HomePageComponents/WePage';
 
 
 const Home = () => {
@@ -14,6 +15,8 @@ const Home = () => {
     <Layout title="Home Page | SIH 2k23">
       <Card />
       <Navbar CurrentUser={CurrentUser}/>
+
+      <WePage />
     </Layout>
   )
 }
