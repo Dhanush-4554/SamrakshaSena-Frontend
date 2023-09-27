@@ -5,7 +5,7 @@ import './registerpage.css';
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ChatState } from '../../context/ChatProvider';
 
 const Login = () => {
@@ -77,7 +77,9 @@ const Login = () => {
                     <br />
                     Register with your info
                 </h3>
-                <input type="button" defaultValue="REGISTER" />
+                <Link to='/register'>
+                  <input type="button" defaultValue="Register" />
+                </Link>
             </div>
             <div className="signIn">
                 <h1>Login</h1>
@@ -104,10 +106,8 @@ const Login = () => {
                         <input type="text" placeholder="Agency ID" />
                 </div> */}
 
-
+                
                 <br />
-                <br />
-
 
                 <div className="input">
                     <img
