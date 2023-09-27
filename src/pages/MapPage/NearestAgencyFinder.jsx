@@ -17,6 +17,7 @@ function Nearest() {
   const [category, setCategory] = useState();
   const [userLocation, setUserLocation] = useState(null);
   const [markedLocations, setMarkedLocations] = useState([]);
+  const [markedLocationsContact, setMarkedLocationsContact] = useState([]);
   const [nearestLocation, setNearestLocation] = useState(null);
   const [selectedAgency, setSelectedAgency] = useState(null);
   const [error, setError] = useState(null);
@@ -120,7 +121,8 @@ function Nearest() {
           const marker = L.marker([location.Latitude, location.Longitude], {
             icon: customMarkerIcon,
           })
-            .bindPopup(location.AgencyName)
+            .bindPopup(location.AgencyName +' Phone no:'+ location.AgencyNumber)
+        
             .addTo(mapInstanceRef.current);
 
           // Attach a custom popup content with the button
@@ -134,7 +136,7 @@ function Nearest() {
           const nearestAgency = L.marker([nearest.Latitude, nearest.Longitude], {
             icon: customMarkerIcon,
           })
-            .bindPopup(`Nearest: ${nearest.AgencyName}`)
+            .bindPopup('Nearest:'+ nearest.AgencyName +' '+'Phone no:'+ nearest.AgencyNumber)
             .addTo(mapInstanceRef.current);
           nearestAgency.on("click", () => {
             setSelectedAgency(nearest);
