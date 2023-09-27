@@ -6,13 +6,13 @@ import L from "leaflet";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet/dist/leaflet.css";
-import './map.css'
+import "./map.css";
+import Navbar from "../../components/Layout/Navbar/navbar";
 
 function Nearest() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const categoryParam = queryParams.get("category");
-
 
   const [category, setCategory] = useState();
   const [userLocation, setUserLocation] = useState(null);
@@ -121,8 +121,10 @@ function Nearest() {
           const marker = L.marker([location.Latitude, location.Longitude], {
             icon: customMarkerIcon,
           })
-            .bindPopup(location.AgencyName +' Phone no:'+ location.AgencyNumber)
-        
+            .bindPopup(
+              location.AgencyName + " Phone no:" + location.AgencyNumber
+            )
+
             .addTo(mapInstanceRef.current);
 
           // Attach a custom popup content with the button
@@ -133,10 +135,19 @@ function Nearest() {
 
         // Adding a marker for the nearest location
         if (nearest) {
-          const nearestAgency = L.marker([nearest.Latitude, nearest.Longitude], {
-            icon: customMarkerIcon,
-          })
-            .bindPopup('Nearest:'+ nearest.AgencyName +' '+'Phone no:'+ nearest.AgencyNumber)
+          const nearestAgency = L.marker(
+            [nearest.Latitude, nearest.Longitude],
+            {
+              icon: customMarkerIcon,
+            }
+          )
+            .bindPopup(
+              "Nearest:" +
+                nearest.AgencyName +
+                " " +
+                "Phone no:" +
+                nearest.AgencyNumber
+            )
             .addTo(mapInstanceRef.current);
           nearestAgency.on("click", () => {
             setSelectedAgency(nearest);
@@ -174,9 +185,9 @@ function Nearest() {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(degToRad(lat1)) *
-      Math.cos(degToRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+        Math.cos(degToRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = earthRadius * c;
     return distance;
@@ -186,22 +197,17 @@ function Nearest() {
     return deg * (Math.PI / 180);
   }
 
-
-
   const showShortestRoute = () => {
     if (userLocation && selectedAgency) {
-
       // Creating a routing control and add it to the map
       L.Routing.control({
         waypoints: [
           L.latLng(userLocation.latitude, userLocation.longitude),
           L.latLng(selectedAgency.Latitude, selectedAgency.Longitude),
         ],
-          
-        
       }).addTo(mapInstanceRef.current);
-      const lineStroke = document.getElementsByClassName('leaflet-interactive');
-      lineStroke.stroke='blue';
+      const lineStroke = document.getElementsByClassName("leaflet-interactive");
+      lineStroke.stroke = "blue";
     }
   };
 
@@ -244,23 +250,40 @@ function Nearest() {
   //   }
   // }
 
-
   return (
-    <div className="map-container">
-      <div className="categories">
-        <button className='link' onClick={() => setCategory("fire")}><p>Fire Agencies</p></button>
-        <button className='link' onClick={() => setCategory("flood")}><p>Flood Agencies</p></button>
-        <button className='link' onClick={() => setCategory("animalRescue")}><p>Animal Rescue</p></button>
-        <button className='link' onClick={() => setCategory("excavation")}><p>Excavation Agencies</p></button>
-      </div>
-      <div className="map-holder">
-        <div id="map" className="map" ref={mapRef}></div>
-      </div>
-      {selectedAgency && (
-        <div className="route-button">
-          <button onClick={showShortestRoute} className="shortestRoute">Show Shortest Route</button>
+    <div className="map-page">
+      <Navbar className="navbarMap" />
+      <div>
+        <div className="map-container">
+          <div className="categories">
+            <button className="link" onClick={() => setCategory("fire")}>
+              <p>Fire Agencies</p>
+            </button>
+            <button className="link" onClick={() => setCategory("flood")}>
+              <p>Flood Agencies</p>
+            </button>
+            <button
+              className="link"
+              onClick={() => setCategory("animalRescue")}
+            >
+              <p>Animal Rescue</p>
+            </button>
+            <button className="link" onClick={() => setCategory("excavation")}>
+              <p>Excavation Agencies</p>
+            </button>
+          </div>
+          <div className="map-holder">
+            <div id="map" className="map" ref={mapRef}></div>
+          </div>
+          {selectedAgency && (
+            <div className="route-button">
+              <button onClick={showShortestRoute} className="shortestRoute">
+                Show Shortest Route
+              </button>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
