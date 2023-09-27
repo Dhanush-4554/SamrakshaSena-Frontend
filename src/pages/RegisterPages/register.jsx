@@ -1,17 +1,12 @@
-import { React, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { React, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./registerpage.css";
 
-import {
-  Button,
-  FormControl,
-  Input,
-  useToast,
-} from "@chakra-ui/react";
-import axios from 'axios';
-import { ChatState } from '../../context/ChatProvider';
+import { Button, FormControl, Input, useToast } from "@chakra-ui/react";
+import axios from "axios";
+import { ChatState } from "../../context/ChatProvider";
 
 const Register = () => {
-
   const [AgencyName, setAgencyName] = useState();
   const [AgencyNumber, setAgencyNumber] = useState();
   const [AgencyEmail, setAgencyEmail] = useState();
@@ -28,7 +23,6 @@ const Register = () => {
   const { setCurrentUser } = ChatState();
 
   const submitHandler = async () => {
-
     if (!AgencyName || !AgencyPassword) {
       toast({
         title: "Please Fill all the Feilds",
@@ -38,25 +32,22 @@ const Register = () => {
         position: "top",
       });
       return;
-    }  
-    
-    const register_ojt = {
-          AgencyName,
-          AgencyNumber,
-          AgencyEmail,
-          AgencyDescription,
-          AgencyAddress,
-          AgencyCategory,
-          AgencyLatitude:Latitude,
-          AgencyLongitude:Longitude,
-          AgencyPassword
     }
 
+    const register_ojt = {
+      AgencyName,
+      AgencyNumber,
+      AgencyEmail,
+      AgencyDescription,
+      AgencyAddress,
+      AgencyCategory,
+      AgencyLatitude: Latitude,
+      AgencyLongitude: Longitude,
+      AgencyPassword,
+    };
+
     try {
-      const { data } = await axios.post(
-        "/api/register",
-        register_ojt
-      );
+      const { data } = await axios.post("/api/register", register_ojt);
       toast({
         title: "Registered Successful",
         status: "success",
@@ -66,11 +57,10 @@ const Register = () => {
       });
 
       console.log(data);
-      
+
       setTimeout(() => {
         navigate("/login");
       }, 500);
-
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -80,38 +70,34 @@ const Register = () => {
         position: "top",
       });
     }
-
-  }
+  };
 
   const handleGetLocation = () => {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                // Get latitude and longitude from the position object
-                setLatituse(position.coords.latitude)
-                setLongitude(position.coords.longitude)
-            },
-            (error) => {
-                // Handle error when geolocation fails
-                console.error("Error getting location:", error);
-            }
-        );
-        toast({
-            title: "This is Your Current Location Coordinates.If you are not in Spot give the Coordinates Manually",
-            status: "warning",
-            duration: 8000,
-            isClosable: true,
-            position: "top",
-        });
-
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // Get latitude and longitude from the position object
+          setLatituse(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (error) => {
+          // Handle error when geolocation fails
+          console.error("Error getting location:", error);
+        }
+      );
+      toast({
+        title:
+          "This is Your Current Location Coordinates.If you are not in Spot give the Coordinates Manually",
+        status: "warning",
+        duration: 8000,
+        isClosable: true,
+        position: "top",
+      });
     } else {
-        // Geolocation is not supported by the browser
-        console.error("Geolocation is not supported by your browser.");
+      // Geolocation is not supported by the browser
+      console.error("Geolocation is not supported by your browser.");
     }
-};
-
-
-
+  };
 
   return (
     <div className="login">
@@ -122,13 +108,12 @@ const Register = () => {
           <br />
           Register with your info
         </h3>
-        <Link to='/login'>
+        <Link to="/login">
           <input type="button" defaultValue="Login" />
         </Link>
       </div>
       <div className="signIn">
         <h1>Register</h1>
-        
 
         <div className="input">
           <input
@@ -152,7 +137,7 @@ const Register = () => {
 
         <div className="input">
           <input
-            autoComplete='off'
+            autoComplete="off"
             value={AgencyEmail}
             type="email"
             placeholder="Enter AgencyEmail"
@@ -168,7 +153,14 @@ const Register = () => {
             onChange={(e) => setAgencyAddress(e.target.value)}
           />
         </div>
-
+        <div className="input">
+          <input
+            value={AgencyCategory}
+            type="text"
+            placeholder="Enter AgencyCategory"
+            onChange={(e) => setAgencyCategory(e.target.value)}
+          />
+        </div>
 
         <div className="input">
           <input
@@ -179,41 +171,36 @@ const Register = () => {
           />
         </div>
 
-        <div className="input">
-          <input
-            value={AgencyCategory}
-            type="text"
-            placeholder="Enter AgencyDescription"
-            onChange={(e) => setAgencyCategory(e.target.value)}
-          />
-        </div>
-
-        <FormControl display={"flex"} flexDir={"column"}>
+        <FormControl display={"flex"} flexDir={"column"} ml={8}>
           <Button
             colorScheme="teal"
             onClick={handleGetLocation}
             mb={2}
+            ml={7}
+            mt={8}
             size="sm"
             width={40}
           >
             Get Location
-           </Button>  {/*Make this button on right side or anywhere */}
+          </Button>{" "}
+          {/*Make this button on right side or anywhere */}
           <Input
             placeholder="Latitude"
             mb={1}
+            ml={9}
             value={Latitude}
             onChange={(e) => setLatituse(e.target.value)}
-            width={200}
+            width={210}
           />
           <Input
             placeholder="Longitude"
             mb={1}
+            ml={9}
             value={Longitude}
             onChange={(e) => setLongitude(e.target.value)}
-            width={200}
+            width={210}
           />
         </FormControl>
-
 
         <div className="input">
           <input
@@ -225,15 +212,12 @@ const Register = () => {
         </div>
         <br />
         <br />
-        <button
-          className="submit"
-          onClick={submitHandler}
-        >
-          SignIn
+        <button className="submit" onClick={submitHandler}>
+          SignUp
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
