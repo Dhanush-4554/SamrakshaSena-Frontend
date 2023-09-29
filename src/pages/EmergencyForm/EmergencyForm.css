@@ -1,0 +1,11 @@
+.emergencyForm{
+    width: 60%;
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.emergencyForm > select{
+    width: 30%;
+    margin: 20px auto;
+}
