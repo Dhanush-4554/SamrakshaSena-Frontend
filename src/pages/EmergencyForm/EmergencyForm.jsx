@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
+import "./EmergencyForm.css";
 
 function NearestWithCategory() {
   const [category, setCategory] = useState("");
   const [userLocation, setUserLocation] = useState(null);
-  const [nearestAgencyPhoneNumber, setNearestAgencyPhoneNumber] = useState(null);
+  const [nearestAgencyPhoneNumber, setNearestAgencyPhoneNumber] =
+    useState(null);
   const [nearestAgencyName, setNearestAgencyName] = useState(null);
 
-  useEffect(() => {
-  
+  async function handleSubmit() {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
@@ -15,7 +16,6 @@ function NearestWithCategory() {
             const { latitude, longitude } = position.coords;
             setUserLocation({ latitude, longitude });
 
-            
             if (category) {
               try {
                 const response = await fetch(
@@ -24,7 +24,7 @@ function NearestWithCategory() {
 
                 if (response.ok) {
                   const data = await response.json();
-                 
+
                   if (data.length > 0) {
                     const nearestAgency = findNearestAgency(
                       latitude,
@@ -35,15 +35,13 @@ function NearestWithCategory() {
                     setNearestAgencyPhoneNumber(nearestAgency.AgencyNumber);
                     setNearestAgencyName(nearestAgency.AgencyName);
 
-                  
                     sendToBackend({
-                      UserLatitude:latitude,
-                      UserLongitude:longitude,
-                      AgencyNumber:nearestAgency.AgencyNumber,
+                      UserLatitude: latitude,
+                      UserLongitude: longitude,
+                      AgencyNumber: nearestAgency.AgencyNumber,
                     });
                   }
                 } else {
-                
                   console.error("Error fetching agency data");
                 }
               } catch (error) {
@@ -61,8 +59,7 @@ function NearestWithCategory() {
     } else {
       console.error("Geolocation is not available in your browser");
     }
-  }, [category]);
-
+  }
 
   function calculateDistance(lat1, lon1, lat2, lon2) {
     const earthRadius = 6371;
@@ -105,14 +102,11 @@ function NearestWithCategory() {
     return nearestAgency;
   }
 
-
-  
   function sendToBackend(data) {
-   
     const backendEndpoint = `http://localhost:5000/api/alertAgency`;
-  
-    console.log('Sending data to backend:',data);
-  
+
+    console.log("Sending data to backend:", data);
+
     fetch(backendEndpoint, {
       method: "POST",
       headers: {
@@ -121,7 +115,7 @@ function NearestWithCategory() {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        console.log('Response status:', response.status);
+        console.log("Response status:", response.status);
         if (response.ok) {
           console.log("Data sent to backend successfully");
         } else {
@@ -132,9 +126,9 @@ function NearestWithCategory() {
         console.error("Error sending data to backend:", error);
       });
   }
-  
+
   return (
-    <div>
+    <div className="emergencyForm">
       <label htmlFor="category">Select a Category:</label>
       <select
         id="category"
@@ -164,6 +158,8 @@ function NearestWithCategory() {
           <p>{nearestAgencyPhoneNumber}</p>
         </div>
       )}
+
+      <button onClick={handleSubmit}>submit</button>
     </div>
   );
 }
