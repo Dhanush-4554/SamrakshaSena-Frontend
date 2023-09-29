@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import { CheckIcon, ChevronDownIcon, CloseIcon } from '@chakra-ui/icons'
 import "./registerpage.css";
 
-import { Button, FormControl, Input, useToast, Box, } from "@chakra-ui/react";
+import { Button, FormControl, Input, useToast, Box, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import axios from "axios";
 import { ChatState } from "../../context/ChatProvider";
 
@@ -20,7 +20,8 @@ const Register = () => {
   const [verifyLicense, setverifyLicense] = useState();
   const [verifiedNumber, setverifiedNumber] = useState();
   const [Loading, setLoading] = useState(false);
-  const [verifyStatus,setverifyStatus] = useState(false);
+  const [verifyStatus, setverifyStatus] = useState(false);
+  const [selectDepartment,setselectDepartment] = useState('Select Department Category');
 
   const toast = useToast();
 
@@ -120,6 +121,55 @@ const Register = () => {
         position: "top",
       });
     }
+  };
+
+  const submitGovtReg = async() =>{
+
+    if (!AgencyName || !selectDepartment) {
+      toast({
+        title: "Please Fill all the Feilds",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
+
+    const register_ojt = {
+      AgencyName,
+      AgencyNumber,
+      AgencyEmail,
+      AgencyAddress,
+      Department:selectDepartment
+    };
+
+    try {
+      const { data } = await axios.post("/api/registerGovt", register_ojt);
+      toast({
+        title: "Registered Successful",
+        status: "success",
+        duration: 500,
+        isClosable: true,
+        position: "top",
+      });
+
+      //console.log(data);
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 500);
+
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+
   }
 
   const handleGetLocation = () => {
@@ -150,6 +200,7 @@ const Register = () => {
   };
 
   return (
+
     <div className="login">
       <div className="register">
         <h1>Rescue Again!</h1>
@@ -165,151 +216,262 @@ const Register = () => {
       <div className="signIn">
         <h1>Register</h1>
 
-        <div className="input">
-          <input
-            value={AgencyName}
-            type="text"
-            placeholder="Enter AgencyName"
-            onChange={(e) => setAgencyName(e.target.value)}
-          />
-        </div>
+        <Tabs variant='soft-rounded' colorScheme='green'>
+          <TabList>
+            <Tab> Agency  </Tab>
+            <Tab> Govt Department </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <>
+                <div className="input">
+                  <input
+                    value={AgencyName}
+                    type="text"
+                    placeholder="Enter AgencyName"
+                    onChange={(e) => setAgencyName(e.target.value)}
+                  />
+                </div>
 
-        <br />
+                <div className="input">
+                  <input
+                    value={AgencyNumber}
+                    type="text"
+                    placeholder="Enter AgencyNumber"
+                    onChange={(e) => setAgencyNumber(e.target.value)}
+                  />
+                </div>
 
-        <div className="input">
-          <input
-            value={AgencyNumber}
-            type="text"
-            placeholder="Enter AgencyNumber"
-            onChange={(e) => setAgencyNumber(e.target.value)}
-          />
-        </div>
+                <div className="input">
+                  <input
+                    autoComplete="off"
+                    value={AgencyEmail}
+                    type="email"
+                    placeholder="Enter AgencyEmail"
+                    onChange={(e) => setAgencyEmail(e.target.value)}
+                  />
+                </div>
 
-        <div className="input">
-          <input
-            autoComplete="off"
-            value={AgencyEmail}
-            type="email"
-            placeholder="Enter AgencyEmail"
-            onChange={(e) => setAgencyEmail(e.target.value)}
-          />
-        </div>
+                <div className="input">
+                  <input
+                    value={AgencyAddress}
+                    type="text"
+                    placeholder="Enter AgencyAddress"
+                    onChange={(e) => setAgencyAddress(e.target.value)}
+                  />
+                </div>
+                <div className="input">
+                  <input
+                    value={AgencyCategory}
+                    type="text"
+                    placeholder="Enter AgencyCategory"
+                    onChange={(e) => setAgencyCategory(e.target.value)}
+                  />
+                </div>
 
-        <div className="input">
-          <input
-            value={AgencyAddress}
-            type="text"
-            placeholder="Enter AgencyAddress"
-            onChange={(e) => setAgencyAddress(e.target.value)}
-          />
-        </div>
-        <div className="input">
-          <input
-            value={AgencyCategory}
-            type="text"
-            placeholder="Enter AgencyCategory"
-            onChange={(e) => setAgencyCategory(e.target.value)}
-          />
-        </div>
+                <div className="input">
+                  <input
+                    value={AgencyDescription}
+                    type="text"
+                    placeholder="Enter AgencyDescription"
+                    onChange={(e) => setAgencyDescription(e.target.value)}
+                  />
+                </div>
 
-        <div className="input">
-          <input
-            value={AgencyDescription}
-            type="text"
-            placeholder="Enter AgencyDescription"
-            onChange={(e) => setAgencyDescription(e.target.value)}
-          />
-        </div>
+                <FormControl display={"flex"} flexDir={"column"} ml={8}>
+                  <Button
+                    colorScheme="teal"
+                    onClick={handleGetLocation}
+                    mb={2}
+                    ml={7}
+                    mt={8}
+                    size="sm"
+                    width={40}
+                  >
+                    Get Location
+                  </Button>{" "}
+                  {/*Make this button on right side or anywhere */}
+                  <Input
+                    placeholder="Latitude"
+                    mb={1}
+                    ml={9}
+                    value={Latitude}
+                    onChange={(e) => setLatituse(e.target.value)}
+                    width={210}
+                  />
+                  <Input
+                    placeholder="Longitude"
+                    mb={1}
+                    ml={9}
+                    value={Longitude}
+                    onChange={(e) => setLongitude(e.target.value)}
+                    width={210}
+                  />
+                </FormControl>
 
-        <FormControl display={"flex"} flexDir={"column"} ml={8}>
-          <Button
-            colorScheme="teal"
-            onClick={handleGetLocation}
-            mb={2}
-            ml={7}
-            mt={8}
-            size="sm"
-            width={40}
-          >
-            Get Location
-          </Button>{" "}
-          {/*Make this button on right side or anywhere */}
-          <Input
-            placeholder="Latitude"
-            mb={1}
-            ml={9}
-            value={Latitude}
-            onChange={(e) => setLatituse(e.target.value)}
-            width={210}
-          />
-          <Input
-            placeholder="Longitude"
-            mb={1}
-            ml={9}
-            value={Longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-            width={210}
-          />
-        </FormControl>
+                <Box
+                  display={'flex'}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                >
+                  <Input
+                    position={"relative"}
+                    left={3.5}
+                    placeholder="License Number"
+                    mb={1}
+                    ml={50}
+                    value={verifyLicense}
+                    onChange={(e) => {
+                      setverifyLicense(e.target.value)
+                    }}
+                    width={210}
+                  />
 
-        <Box
-          display={'flex'}
-          alignItems={"center"}
-          justifyContent={"center"}
-        >
-          <Input
-            position={"relative"}
-            left={3.5}
-            placeholder="License Number"
-            mb={1}
-            ml={50}
-            value={verifyLicense}
-            onChange={(e) => {
-              setverifyLicense(e.target.value)
-            }}
-            width={210}
-          />
-
-          {
-            Loading ?
-              <Button
-                isLoading
-                loadingText='Check'
-                colorScheme='teal'
-                variant='outline'
-                ml={4}
-                width={100}
-              />
-              :
-              <Button
-                colorScheme='teal'
-                leftIcon={
-                  verifiedNumber ? <CheckIcon color={'green'} boxSize={6} /> :
-                     ( verifyStatus ? <CloseIcon color={'red'} /> : null)
-                }
-                ml={5}
-                onClick={CheckLicenseNumber}
-              >
-                Verify
-              </Button>
-          }
+                  {
+                    Loading ?
+                      <Button
+                        isLoading
+                        loadingText='Check'
+                        colorScheme='teal'
+                        variant='outline'
+                        ml={4}
+                        width={100}
+                      />
+                      :
+                      <Button
+                        colorScheme='teal'
+                        leftIcon={
+                          verifiedNumber ? <CheckIcon color={'green'} boxSize={6} /> :
+                            (verifyStatus ? <CloseIcon color={'red'} /> : null)
+                        }
+                        ml={5}
+                        onClick={CheckLicenseNumber}
+                      >
+                        Verify
+                      </Button>
+                  }
 
 
-        </Box>
+                </Box>
 
-        <div className="input">
-          <input
-            value={AgencyPassword}
-            onChange={(e) => setAgencyPassword(e.target.value)}
-            type="password"
-            placeholder="Enter password"
-          />
-        </div>
-        <br />
-        <br />
-        <button className="submit" onClick={submitHandler}>
-          SignUp
-        </button>
+                <div className="input">
+                  <input
+                    value={AgencyPassword}
+                    onChange={(e) => setAgencyPassword(e.target.value)}
+                    type="password"
+                    placeholder="Enter password"
+                  />
+                </div>
+                <br />
+                <br />
+                <button className="submit" onClick={submitHandler}>
+                  SignUp
+                </button>
+              </>
+            </TabPanel>
+            <TabPanel>
+              <>
+                <div className="input">
+                  <input
+                    value={AgencyName}
+                    type="text"
+                    placeholder="Enter AgencyName"
+                    onChange={(e) => setAgencyName(e.target.value)}
+                  />
+                </div>
+
+                <div className="input">
+                  <input
+                    value={AgencyNumber}
+                    type="text"
+                    placeholder="Enter AgencyNumber"
+                    onChange={(e) => setAgencyNumber(e.target.value)}
+                  />
+                </div>
+
+                <div className="input">
+                  <input
+                    autoComplete="off"
+                    value={AgencyEmail}
+                    type="email"
+                    placeholder="Enter AgencyEmail"
+                    onChange={(e) => setAgencyEmail(e.target.value)}
+                  />
+                </div>
+
+                <div className="input">
+                  <input
+                    value={AgencyAddress}
+                    type="text"
+                    placeholder="Enter AgencyAddress"
+                    onChange={(e) => setAgencyAddress(e.target.value)}
+                  />
+                </div>
+
+                <Menu>
+                  <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                    {selectDepartment}
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem value='Police' onClick={(e) => { setselectDepartment(e.target.value) }} > Police </MenuItem>
+                    <MenuItem value='Hospital' onClick={(e) => { setselectDepartment(e.target.value) }}> Hospital </MenuItem>
+                    <MenuItem value='Electricity' onClick={(e) => { setselectDepartment(e.target.value) }}> Electricity </MenuItem>
+                  </MenuList>
+                </Menu>
+
+                <Box
+                  display={'flex'}
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                >
+                  <Input
+                    position={"relative"}
+                    left={3.5}
+                    placeholder="License Number"
+                    mb={1}
+                    ml={50}
+                    value={verifyLicense}
+                    onChange={(e) => {
+                      setverifyLicense(e.target.value)
+                    }}
+                    width={210}
+                  />
+
+                  {
+                    Loading ?
+                      <Button
+                        isLoading
+                        loadingText='Check'
+                        colorScheme='teal'
+                        variant='outline'
+                        ml={4}
+                        width={100}
+                      />
+                      :
+                      <Button
+                        colorScheme='teal'
+                        leftIcon={
+                          verifiedNumber ? <CheckIcon color={'green'} boxSize={6} /> :
+                            (verifyStatus ? <CloseIcon color={'red'} /> : null)
+                        }
+                        ml={5}
+                        onClick={CheckLicenseNumber}
+                      >
+                        Verify
+                      </Button>
+                  }
+
+                </Box>
+
+                <button className="submit" onClick={submitGovtReg}>
+                  SignUp
+                </button>
+              </>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+
+
       </div>
     </div>
   );
