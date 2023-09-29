@@ -1,8 +1,9 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import "./registerpage.css";
 
-import { Button, FormControl, Input, useToast } from "@chakra-ui/react";
+import { Button, FormControl, Input, useToast, Box, } from "@chakra-ui/react";
 import axios from "axios";
 import { ChatState } from "../../context/ChatProvider";
 
@@ -16,6 +17,10 @@ const Register = () => {
   const [AgencyPassword, setAgencyPassword] = useState();
   const [Latitude, setLatituse] = useState();
   const [Longitude, setLongitude] = useState();
+  const [verifyLicense, setverifyLicense] = useState();
+  const [verifiedNumber, setverifiedNumber] = useState();
+  const [Loading, setLoading] = useState(false);
+  const [verifyStatus,setverifyStatus] = useState(false);
 
   const toast = useToast();
 
@@ -71,6 +76,51 @@ const Register = () => {
       });
     }
   };
+
+  const CheckLicenseNumber = async () => {
+
+    setLoading(true);
+
+    try {
+      const { data } = await axios.post(`/api/getLicense`, {
+        LicenseNumber: verifyLicense
+      });
+
+      if (data) {
+        toast({
+          title: "Verified",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        setLoading(false);
+        setverifiedNumber(true);
+      } else {
+        toast({
+          title: "License Number Not Found",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        setverifyStatus(true);
+        setLoading(false);
+        setverifiedNumber(false)
+      }
+
+
+
+    } catch (error) {
+      toast({
+        title: "Could not Find License Number!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  }
 
   const handleGetLocation = () => {
     if (navigator.geolocation) {
@@ -201,6 +251,51 @@ const Register = () => {
             width={210}
           />
         </FormControl>
+
+        <Box
+          display={'flex'}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Input
+            position={"relative"}
+            left={3.5}
+            placeholder="License Number"
+            mb={1}
+            ml={50}
+            value={verifyLicense}
+            onChange={(e) => {
+              setverifyLicense(e.target.value)
+            }}
+            width={210}
+          />
+
+          {
+            Loading ?
+              <Button
+                isLoading
+                loadingText='Check'
+                colorScheme='teal'
+                variant='outline'
+                ml={4}
+                width={100}
+              />
+              :
+              <Button
+                colorScheme='teal'
+                leftIcon={
+                  verifiedNumber ? <CheckIcon color={'green'} boxSize={6} /> :
+                     ( verifyStatus ? <CloseIcon color={'red'} /> : null)
+                }
+                ml={5}
+                onClick={CheckLicenseNumber}
+              >
+                Verify
+              </Button>
+          }
+
+
+        </Box>
 
         <div className="input">
           <input
