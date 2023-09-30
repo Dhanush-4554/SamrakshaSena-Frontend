@@ -1,0 +1,42 @@
+.foot{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px;
+}
+
+.touch{
+    color: #69a85a;
+    font-weight: 900;
+    font-size: xx-large;
+}
+
+address{
+    list-style: none;
+}
+
+address li:nth-child(1){
+    font-weight: 700;
+    color: #69a85a;
+}
+
+.media{
+    margin-right: 400px;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.media img{
+    height: 40px;
+    border-radius: 100%;
+}
+
+.media img:hover {
+    
+    filter: drop-shadow(0 0 15px white);
+  }
+
+  

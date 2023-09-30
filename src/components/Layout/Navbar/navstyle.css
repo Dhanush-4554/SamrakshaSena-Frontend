@@ -44,3 +44,9 @@ a{
     text-decoration: underline;
     transition: 0.5s;
 }
+
+.nav_login li:hover {
+    color: green;
+    text-decoration: underline;
+    transition: 0.5s;
+}

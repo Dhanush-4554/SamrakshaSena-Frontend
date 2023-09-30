@@ -28,7 +28,7 @@ const navbar = ({CurrentUser}) => {
         </ul>
       </nav>
       <ul className="nav_login">
-        <li> <Link to="/login">  Login <b>|</b> </Link> </li>
+        <li> <Link to="/login"> 🌐 Login  </Link> </li> <b>|</b>
         <li>  English  </li>
       </ul>
     </header>
