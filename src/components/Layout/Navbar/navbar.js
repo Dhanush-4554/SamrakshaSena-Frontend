@@ -1,4 +1,6 @@
 import React from 'react'
+import logo from './Web_Logo.jpg'
+import logo1 from './RotatingLogo.gif'
 import "./navstyle.css"
 import { ChatState } from '../../../context/ChatProvider'
 import { Link } from 'react-router-dom';
@@ -18,7 +20,10 @@ const navbar = ({CurrentUser}) => {
 
   return (
     <header className="nav_bar">
-      <h1 className="logo">  <Link to="/">  Samraksha sena </Link>  </h1>
+      <Link className="logos" to={"/"}> 
+        <img src={logo1} className='gif'/>
+        <img src={logo} className="logo"/> 
+      </Link>
       <nav>
         <ul class="nav_link">
           <li> <Link to="/"> Home </Link> </li>
@@ -28,8 +33,8 @@ const navbar = ({CurrentUser}) => {
         </ul>
       </nav>
       <ul className="nav_login">
-        <li> <Link to="/login">  Login <b>|</b> </Link> </li>
-        <li>  English  </li>
+        <li> <Link to="/login" >  Login </Link> </li>
+      
       </ul>
     </header>
   )
