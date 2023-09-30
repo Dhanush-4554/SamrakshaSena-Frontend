@@ -1,9 +1,25 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CheckIcon, ChevronDownIcon, CloseIcon } from '@chakra-ui/icons'
+import { CheckIcon, ChevronDownIcon, CloseIcon } from "@chakra-ui/icons";
 import "./registerpage.css";
 
-import { Button, FormControl, Input, useToast, Box, Tabs, TabList, TabPanels, Tab, TabPanel, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  Input,
+  useToast,
+  Box,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Center,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { ChatState } from "../../context/ChatProvider";
 
@@ -21,7 +37,9 @@ const Register = () => {
   const [verifiedNumber, setverifiedNumber] = useState();
   const [Loading, setLoading] = useState(false);
   const [verifyStatus, setverifyStatus] = useState(false);
-  const [selectDepartment,setselectDepartment] = useState('Select Department Category');
+  const [selectDepartment, setselectDepartment] = useState(
+    "Select Department Category"
+  );
 
   const toast = useToast();
 
@@ -79,12 +97,11 @@ const Register = () => {
   };
 
   const CheckLicenseNumber = async () => {
-
     setLoading(true);
 
     try {
       const { data } = await axios.post(`/api/getLicense`, {
-        LicenseNumber: verifyLicense
+        LicenseNumber: verifyLicense,
       });
 
       if (data) {
@@ -107,11 +124,8 @@ const Register = () => {
         });
         setverifyStatus(true);
         setLoading(false);
-        setverifiedNumber(false)
+        setverifiedNumber(false);
       }
-
-
-
     } catch (error) {
       toast({
         title: "Could not Find License Number!",
@@ -123,8 +137,7 @@ const Register = () => {
     }
   };
 
-  const submitGovtReg = async() =>{
-
+  const submitGovtReg = async () => {
     if (!AgencyName || !selectDepartment) {
       toast({
         title: "Please Fill all the Feilds",
@@ -141,7 +154,7 @@ const Register = () => {
       AgencyNumber,
       AgencyEmail,
       AgencyAddress,
-      Department:selectDepartment
+      Department: selectDepartment,
     };
 
     try {
@@ -159,7 +172,6 @@ const Register = () => {
       setTimeout(() => {
         navigate("/login");
       }, 500);
-
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -169,8 +181,7 @@ const Register = () => {
         position: "top",
       });
     }
-
-  }
+  };
 
   const handleGetLocation = () => {
     if (navigator.geolocation) {
@@ -200,7 +211,6 @@ const Register = () => {
   };
 
   return (
-
     <div className="login">
       <div className="register">
         <h1>Rescue Again!</h1>
@@ -216,9 +226,9 @@ const Register = () => {
       <div className="signIn">
         <h1>Register</h1>
 
-        <Tabs variant='soft-rounded' colorScheme='green'>
-          <TabList>
-            <Tab> Agency  </Tab>
+        <Tabs variant="soft-rounded" colorScheme="green">
+          <TabList mt={5}>
+            <Tab ml={4}> Agency </Tab>
             <Tab> Govt Department </Tab>
           </TabList>
           <TabPanels>
@@ -277,13 +287,22 @@ const Register = () => {
                     onChange={(e) => setAgencyDescription(e.target.value)}
                   />
                 </div>
+                <div className="input">
+                  <input
+                    value={AgencyPassword}
+                    onChange={(e) => setAgencyPassword(e.target.value)}
+                    type="password"
+                    placeholder="Enter password"
+                    className="agencyPassword"
+                  />
+                </div>
 
-                <FormControl display={"flex"} flexDir={"column"} ml={8}>
+                <FormControl display={"flex"} flexDir={"column"} left={6}>
                   <Button
                     colorScheme="teal"
                     onClick={handleGetLocation}
                     mb={2}
-                    ml={7}
+                    ml={5}
                     mt={8}
                     size="sm"
                     width={40}
@@ -294,74 +313,62 @@ const Register = () => {
                   <Input
                     placeholder="Latitude"
                     mb={1}
-                    ml={9}
                     value={Latitude}
                     onChange={(e) => setLatituse(e.target.value)}
-                    width={210}
+                    width={200}
                   />
                   <Input
                     placeholder="Longitude"
                     mb={1}
-                    ml={9}
                     value={Longitude}
                     onChange={(e) => setLongitude(e.target.value)}
-                    width={210}
+                    width={200}
                   />
                 </FormControl>
 
                 <Box
-                  display={'flex'}
+                  display={"flex"}
                   alignItems={"center"}
                   justifyContent={"center"}
+                  mt={8}
                 >
                   <Input
                     position={"relative"}
-                    left={3.5}
                     placeholder="License Number"
                     mb={1}
-                    ml={50}
                     value={verifyLicense}
                     onChange={(e) => {
-                      setverifyLicense(e.target.value)
+                      setverifyLicense(e.target.value);
                     }}
-                    width={210}
+                    width={150}
                   />
 
-                  {
-                    Loading ?
-                      <Button
-                        isLoading
-                        loadingText='Check'
-                        colorScheme='teal'
-                        variant='outline'
-                        ml={4}
-                        width={100}
-                      />
-                      :
-                      <Button
-                        colorScheme='teal'
-                        leftIcon={
-                          verifiedNumber ? <CheckIcon color={'green'} boxSize={6} /> :
-                            (verifyStatus ? <CloseIcon color={'red'} /> : null)
-                        }
-                        ml={5}
-                        onClick={CheckLicenseNumber}
-                      >
-                        Verify
-                      </Button>
-                  }
-
-
+                  {Loading ? (
+                    <Button
+                      isLoading
+                      loadingText="Check"
+                      colorScheme="teal"
+                      variant="outline"
+                      ml={2}
+                    />
+                  ) : (
+                    <Button
+                      colorScheme="teal"
+                      leftIcon={
+                        verifiedNumber ? (
+                          <CheckIcon color={"green"} boxSize={6} />
+                        ) : verifyStatus ? (
+                          <CloseIcon color={"red"} />
+                        ) : null
+                      }
+                      ml={2}
+                      onClick={CheckLicenseNumber}
+                    >
+                      Verify
+                    </Button>
+                  )}
                 </Box>
 
-                <div className="input">
-                  <input
-                    value={AgencyPassword}
-                    onChange={(e) => setAgencyPassword(e.target.value)}
-                    type="password"
-                    placeholder="Enter password"
-                  />
-                </div>
                 <br />
                 <br />
                 <button className="submit" onClick={submitHandler}>
@@ -413,16 +420,42 @@ const Register = () => {
                     {selectDepartment}
                   </MenuButton>
                   <MenuList>
-                    <MenuItem value='Police' onClick={(e) => { setselectDepartment(e.target.value) }} > Police </MenuItem>
-                    <MenuItem value='Hospital' onClick={(e) => { setselectDepartment(e.target.value) }}> Hospital </MenuItem>
-                    <MenuItem value='Electricity' onClick={(e) => { setselectDepartment(e.target.value) }}> Electricity </MenuItem>
+                    <MenuItem
+                      value="Police"
+                      onClick={(e) => {
+                        setselectDepartment(e.target.value);
+                      }}
+                    >
+                      {" "}
+                      Police{" "}
+                    </MenuItem>
+                    <MenuItem
+                      value="Hospital"
+                      onClick={(e) => {
+                        setselectDepartment(e.target.value);
+                      }}
+                    >
+                      {" "}
+                      Hospital{" "}
+                    </MenuItem>
+                    <MenuItem
+                      value="Electricity"
+                      onClick={(e) => {
+                        setselectDepartment(e.target.value);
+                      }}
+                    >
+                      {" "}
+                      Electricity{" "}
+                    </MenuItem>
                   </MenuList>
                 </Menu>
 
                 <Box
-                  display={'flex'}
+                  display={"flex"}
                   alignItems={"center"}
                   justifyContent={"center"}
+                  flexDirection={"column"}
+                  mb={5}
                 >
                   <Input
                     position={"relative"}
@@ -432,35 +465,36 @@ const Register = () => {
                     ml={50}
                     value={verifyLicense}
                     onChange={(e) => {
-                      setverifyLicense(e.target.value)
+                      setverifyLicense(e.target.value);
                     }}
                     width={210}
                   />
 
-                  {
-                    Loading ?
-                      <Button
-                        isLoading
-                        loadingText='Check'
-                        colorScheme='teal'
-                        variant='outline'
-                        ml={4}
-                        width={100}
-                      />
-                      :
-                      <Button
-                        colorScheme='teal'
-                        leftIcon={
-                          verifiedNumber ? <CheckIcon color={'green'} boxSize={6} /> :
-                            (verifyStatus ? <CloseIcon color={'red'} /> : null)
-                        }
-                        ml={5}
-                        onClick={CheckLicenseNumber}
-                      >
-                        Verify
-                      </Button>
-                  }
-
+                  {Loading ? (
+                    <Button
+                      isLoading
+                      loadingText="Check"
+                      colorScheme="teal"
+                      variant="outline"
+                      ml={4}
+                      width={100}
+                    />
+                  ) : (
+                    <Button
+                      colorScheme="teal"
+                      leftIcon={
+                        verifiedNumber ? (
+                          <CheckIcon color={"green"} boxSize={6} />
+                        ) : verifyStatus ? (
+                          <CloseIcon color={"red"} />
+                        ) : null
+                      }
+                      ml={5}
+                      onClick={CheckLicenseNumber}
+                    >
+                      Verify
+                    </Button>
+                  )}
                 </Box>
 
                 <button className="submit" onClick={submitGovtReg}>
@@ -470,8 +504,6 @@ const Register = () => {
             </TabPanel>
           </TabPanels>
         </Tabs>
-
-
       </div>
     </div>
   );
