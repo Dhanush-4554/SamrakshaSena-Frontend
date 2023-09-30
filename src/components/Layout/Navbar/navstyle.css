@@ -1,46 +1,64 @@
-div{
-    padding: 0;
+ @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+div {
+  padding: 0;
 }
-*{
-    padding: 0;
+* {
+  padding: 0;
 }
 
-.nav_bar{
-    position: absolute;
-    top: 0;
-    box-sizing: border-box;
-    background-color: rgba(0, 0, 0, .85) ;
-    color: aliceblue;
-    text-decoration: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 35px 2%;
-    width: 100%;
+.logos {
+  display: flex;
 }
 
-.logo{
-    cursor: pointer;
+ img .logo1{
+    height:85px;
+}
+.nav_bar {
+  position: absolute;
+  top: 0;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: aliceblue;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 35px 2%;
+  width: 100%;
+  height: 100px;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.logo {
+  cursor: pointer;
 }
 
 .nav_login li {
-    list-style: none;
-    display: inline;
+  list-style: none;
+  display: inline;
+  font-size: 20px;
+}
+
+.nav_login li:hover{
+    color: green;
+    transition: .3s;
+}
+
+.nav_login li link{
+    text-decoration: none;
+    color: green;
 }
 
 .nav_link li {
-    list-style: none;
-    display: inline-block;
-    padding: 0px 20px;
-}
-
-a{
-    text-decoration: none;
-    color: aliceblue;
+  list-style: none;
+  display: inline-block;
+  padding: 0px 20px;
+  font-size: 20px;
 }
 
 .nav_link li a:hover {
-    color: green;
-    text-decoration: underline;
-    transition: 0.5s;
+  color: green;
+  text-decoration: none;
+  transition: 0.3s;
 }
