@@ -1,11 +1,44 @@
-.emergencyForm{
-    width: 60%;
-    margin: 100px auto;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+.emergencyForm {
+  width: 90%;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
-.emergencyForm > select{
-    width: 30%;
-    margin: 20px auto;
+.emergencyForm > select {
+  width: 27%;
+  margin: 20px auto;
+}
+
+.category {
+  font-weight: bold;
+}
+
+.heading_Wepage2 {
+  padding-bottom: 50px;
+}
+
+.dropDownStyle {
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgb(228, 228, 228);
+  /* padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: ; */
+  padding: 7px;
+  padding-right: 0px;
+}
+
+.reportButtonDiv {
+  padding-top: 20px;
+}
+
+.reportButton {
+  color: white;
+  font-size: large;
+  background-color: green;
+  width: 25%;
+  border-radius: 50px;
+  height: 35px;
 }

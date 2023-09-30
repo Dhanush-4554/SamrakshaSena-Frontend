@@ -129,9 +129,17 @@ function NearestWithCategory() {
 
   return (
     <div className="emergencyForm">
-      <label htmlFor="category">Select a Category:</label>
+      <div className="div0">
+        <div className="class1 class2"></div>
+        <h1 className="heading_Wepage heading_Wepage2">report an emergency</h1>
+      </div>
+
+      <label htmlFor="category">
+        <b style={{ fontSize: 25 }}>Select a Category:</b>
+      </label>
       <select
         id="category"
+        className="dropDownStyle"
         value={category}
         onChange={(e) => setCategory(e.target.value)}
       >
@@ -159,7 +167,9 @@ function NearestWithCategory() {
         </div>
       )}
 
-      <button onClick={handleSubmit}>submit</button>
+      <div className="reportButtonDiv" onClick={handleSubmit}>
+        <button className="reportButton">Report</button>
+      </div>
     </div>
   );
 }

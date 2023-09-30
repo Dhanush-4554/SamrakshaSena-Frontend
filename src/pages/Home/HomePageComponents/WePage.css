@@ -1,56 +1,53 @@
 .class1 {
-    background-color: #69a85a;
-    height: 60px;
-    width: 6px;
-    margin-top: 10px;
+  background-color: #69a85a;
+  height: 60px;
+  width: 6px;
+  margin-top: 10px;
 }
 
 .heading_Wepage {
-    text-transform: capitalize;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-top: 14px;
+  text-transform: capitalize;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 14px;
 }
 
 .main2 {
-    position: relative;
-    top: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  position: relative;
+  top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
-.Wepage{
-    background-color:#F6F6F6 ;
-    height: 90vh;
-    margin-bottom: 5vh;
-    margin-top: -3vh;
+.Wepage {
+  background-color: #f6f6f6;
+  height: 90vh;
+  margin-bottom: 5vh;
+  margin-top: -3vh;
 }
 
 .div0 {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    margin: 0 0 3vh 2.5vw;
-    padding-top: 5vh;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 0 0 3vh 2.5vw;
+  padding-top: 5vh;
 }
 
 .div1,
 .div2,
 .div3,
 .div4 {
-    display: flex;
-    flex-direction: column;
-    width: 190px;
+  display: flex;
+  flex-direction: column;
+  width: 190px;
 }
 
 h2 {
-    font-weight: 900;
+  font-weight: 900;
 }
 
-.main2 img:hover {
-    filter: drop-shadow(0 0 30px #69a85a);
-  }
 
   .main2 img{
     border-radius: 100%;
