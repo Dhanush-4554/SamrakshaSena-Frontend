@@ -48,7 +48,6 @@
 }
 
 .signIn {
-  width: 60%;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -60,6 +59,7 @@
   font-size: 40px;
   color: #69a85a;
   font-family: "Gloock", serif;
+  text-align: center;
 }
 
 .signIn img {
@@ -90,9 +90,9 @@
 
 .input {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
+  /* gap: 8px; */
 }
 
 .submit {
@@ -106,9 +106,9 @@
   border-radius: 20px;
   cursor: pointer;
   transition: ease-in-out 0.2s;
+  margin-left: 40px;
 }
 
 .submit:hover {
   transform: scale(1.04);
 }
-
