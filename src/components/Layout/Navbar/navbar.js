@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from './Web_Logo.jpg'
-import logo1 from './RotatingLogo.gif'
+import logo1 from './Rotating_Logo.gif'
 import "./navstyle.css"
 import { ChatState } from '../../../context/ChatProvider'
 import { Link } from 'react-router-dom';
