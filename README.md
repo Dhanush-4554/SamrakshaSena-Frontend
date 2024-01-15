@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# Disaster Management and Coordination Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+The **Disaster Management and Coordination** web-application emerges as a crucial tool in the realm of crisis response, providing a centralized platform for rescue agencies to seamlessly register, communicate, and collaborate during natural or man-made calamities. This multifaceted system aims to revolutionize disaster management by offering an array of essential features that foster efficient coordination and communication among stakeholders.
 
-In the project directory, you can run:
+![Use Case Diagram](./SIHUseCase.jpg "Use Case Diagram")
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Key Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 1. Agency Registration and Login
 
-### `npm test`
+The foundation of the application lies in its **Agency Registration and Login** feature. This component allows rescue agencies to register effortlessly, ensuring their essential information is securely stored. The registration process involves providing key details such as name, contact number, email, address, description, category, and location. Password-protected accounts, implementing secure practices like bcrypt for password hashing and JWT authentication, guarantee data privacy and restrict access to authorized users only.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Enhanced Emergency Alert System
 
-### `npm run build`
+#### User Emergency Button
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+During emergencies, the **Enhanced Emergency Alert System** becomes the lifeline for users. A simple click on the User Emergency Button triggers an immediate response from the nearest and most relevant rescue agency. This system is finely tuned to categorize emergencies, ensuring that the right agency is notified promptly.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Automated Phone Call and SMS Alerts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The application supplements digital alerts with **Automated Phone Call Alerts** and **Automated SMS Alerts**. In the event of an emergency, the system automatically dials the appropriate agency, delivering critical information and instructions in real-time. This comprehensive approach, combining automated phone calls, SMS alerts, and precise categorization, ensures that agencies receive vital information through multiple channels, significantly enhancing their ability to respond swiftly and efficiently.
 
-### `npm run eject`
+### 3. View Locations of All Agencies
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Navigating through the application, users can access a map-based feature that visualizes the geographical locations of all registered rescue agencies. The **View Locations of All Agencies** feature utilizes map markers for at-a-glance access to agency details and contact information. Users can filter agencies based on categories, facilitating efficient allocation of resources during emergencies. Integrated navigation directions offer swift routes to agency locations, ensuring a timely response.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 4. Agencies Communication Room
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+At the heart of the application lies the **Agencies Communication Room**, where rescue agencies converge for real-time collaboration. This dynamic space includes a chat room equipped with real-time chat functionality, discussion boards for in-depth conversations This feature fosters effective coordination among agencies, enhancing disaster response efforts.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 5. Government Department Registration
 
-## Learn More
+Recognizing the importance of collaboration, the application extends an invitation to government departments through the **Government Department Registration** feature. By joining the network of actively involved agencies in disaster management, government entities can contribute their expertise and resources, thereby strengthening the collective response to crises.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Security and Privacy Considerations
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Building an application of this nature requires meticulous attention to **security and privacy**. Measures such as password hashing using bcrypt and JWT authentication are implemented to secure user accounts. Access to the central database is restricted to authorized users, ensuring that sensitive information like personal contact details is protected.
 
-### Code Splitting
+## Conclusion
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+In conclusion, the Disaster Management and Coordination Application emerges as a robust solution to the challenges posed by natural or man-made disasters. By facilitating efficient agency registration, providing an enhanced emergency alert system, offering a visual representation of agency locations, fostering real-time communication and collaboration, and incorporating government departments, this application creates a comprehensive ecosystem for effective disaster management. The emphasis on security and privacy ensures that the application serves as a reliable and trusted tool for rescue agencies, contributing significantly to coordinated and timely responses during crises.
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+# Tech Stacks Used
 
-### Making a Progressive Web App
+## Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### React.js
+React.js is the primary frontend library used for building user interfaces. Its component-based architecture enables modular and efficient development of the application's frontend.
 
-### Advanced Configuration
+### Socket.io
+Socket.io is utilized for real-time communication between the server and the frontend. This technology facilitates instant updates and seamless collaboration within the Agencies Communication Room.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Chakra UI
+Chakra UI is chosen as the frontend framework for its component library and ease of customization. It streamlines the UI development process, ensuring a consistent and visually appealing user interface.
 
-### Deployment
+### Maps
+- **Leaflet**: Leaflet is employed for creating interactive maps within the application. Its lightweight nature and simplicity make it an ideal choice for visualizing the geographical locations of registered rescue agencies.
+- **Google Maps**: Google Maps integration is used to enhance mapping capabilities and provide users with accurate navigation directions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Backend
 
-### `npm run build` fails to minify
+### Node.js
+Node.js serves as the runtime for the backend, offering a scalable and non-blocking architecture. Its efficiency in handling concurrent connections is crucial for real-time features and overall system responsiveness.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Express.js
+Express.js is employed as the backend web framework, simplifying the process of building robust and scalable web applications. Its middleware architecture enhances the handling of HTTP requests and responses.
+
+### Socket.io – Server
+Socket.io is utilized on the server side for real-time bidirectional event-based communication. This is essential for instant updates and communication within the application.
+
+### Mongoose
+Mongoose is the Object Data Modeling (ODM) library used for MongoDB and Node.js. It streamlines database operations, providing a straightforward and structured way to interact with the MongoDB database.
+
+### Jwt, bcrypt.js
+JsonWebToken (JWT) is employed for secure user authentication, and bcrypt.js handles password hashing for enhanced security measures. These technologies contribute to the robust security infrastructure of the application.
+
+### Twilio API
+The Twilio API is integrated for automated phone call alerts. This API allows for seamless communication with rescue agencies through automated phone calls, enhancing the emergency alert system.
+
+## Database
+
+### MongoDB
+MongoDB, a NoSQL database, is chosen for its scalability and flexibility. It stores essential information about rescue agencies, users, and other pertinent data in a structured manner.
+
+
